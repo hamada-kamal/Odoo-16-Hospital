@@ -1,5 +1,5 @@
 {
-    'name': 'OM_Hospital',
+    'name': 'Hospital',
     'author': 'Hamada Gad allah',
     'depends': ['mail'],
     'data': [

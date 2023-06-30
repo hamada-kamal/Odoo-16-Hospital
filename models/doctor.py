@@ -10,8 +10,11 @@ class HospitalDoctor(models.Model):
 
     name = fields.Char(string='Name', required=True, tracking=True)
     age = fields.Integer(string='Age', tracking=True)
-    gender = fields.Selection([
-        ('male', 'Male'),
-        ('female', 'Female'),
-    ], required=True, default='male', tracking=True)
-    # write name_get here ..
+    gender = fields.Selection([('male', 'Male'),
+                             ('female', 'Female'),], required=True, default='male', tracking=True)
+    active = fields.Boolean(default=True)
+    def name_get(self):
+        reslut = []
+        for record in self:
+            reslut.append((record.id,f'Dr.{record.name}'))
+        return reslut
