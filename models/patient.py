@@ -39,3 +39,19 @@ class HospitalPatient(models.Model):
     def check_child_age(self):
         if self.is_child and self.age == 0:
             raise ValidationError('The age has to be recorded !')
+
+    def action_confirm(self):
+        for rec in self:
+            rec.state = 'confirm'
+
+    def action_done(self):
+        for rec in self:
+            rec.state = 'done'
+
+    def action_draft(self):
+        for rec in self:
+            rec.state = 'draft'
+
+    def action_cancel(self):
+        for rec in self:
+            rec.state = 'cancel'
