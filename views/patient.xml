@@ -32,6 +32,7 @@
                             <field name="is_child" readonly="0" />
                             <field name="gender"/>
                             <field name="doctor_id" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="appointment_count"/>
                         </group>
                     </sheet>
                     <div class="oe_chatter">

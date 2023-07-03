@@ -20,8 +20,8 @@ class HospitalPatient(models.Model):
                              string="Status", tracking=True)
     doctor_id = fields.Many2one('hospital.doctor', string="Doctor")
     image = fields.Binary(string="Patient Image")
-    # appointment_ids = fields.One2many('hospital.appointment', 'patient_id', string="Appointments")
-    # appointment_count = fields.Integer(string='Appointment Count', compute='_compute_appointment_count')
+    appointment_ids = fields.One2many('hospital.appointment', 'patient_id', string="Appointments")
+    appointment_count = fields.Integer(string='Appointment Count', compute="compute_appointment_count" )
 
     @api.model_create_multi
     def create(self,vals):
@@ -43,6 +43,7 @@ class HospitalPatient(models.Model):
     def action_confirm(self):
         for rec in self:
             rec.state = 'confirm'
+            print(rec.id)
 
     def action_done(self):
         for rec in self:
@@ -55,3 +56,8 @@ class HospitalPatient(models.Model):
     def action_cancel(self):
         for rec in self:
             rec.state = 'cancel'
+
+    def compute_appointment_count(self):
+        for rec in self:
+            appointments_num = self.env['hospital.appointment'].search_count([('patient_id', '=', rec.id)])  # search will return objs
+            rec.appointment_count = appointments_num
