@@ -11,6 +11,7 @@ class HospitalPatient(models.Model):
     p_sequence = fields.Char(string='Sequence',defalut= lambda self:_(''))
     name = fields.Char(string='Name', required=True, tracking=True)
     age = fields.Integer(string='Age', tracking=True)
+    phone = fields.Char(string='Phone', tracking=True)
     is_child = fields.Boolean(string="Is Child")
     gender = fields.Selection([('male', 'Male'),('female', 'Female'),]
                               , required=True, default='male', tracking=True)

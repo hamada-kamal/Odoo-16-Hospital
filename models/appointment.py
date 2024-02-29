@@ -1,5 +1,5 @@
 from odoo import api, fields, models, _
-# from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError
 
 
 class HospitalAppointment(models.Model):
@@ -20,8 +20,19 @@ class HospitalAppointment(models.Model):
     date_checkup = fields.Datetime(string="Check Up Time")
     prescription_line_ids = fields.One2many('appointment.prescription.lines', 'appointment_id',
                                             string="Prescription Lines")
+    
 
-
+    def action_share_whatsapp(self):
+        if not self.patient_id.phone:
+            raise ValidationError("missing patient phone number!")
+        message = f"Hi {self.patient_id.name}, don't missing your appointment at {self.date_appointment}"
+        whatsapp_api_url = f"https://api.whatsapp.com/send?phone={self.patient_id.phone}&text={message}"
+        return {
+            'type': 'ir.actions.act_url',
+            'target': 'new',
+            'url': whatsapp_api_url,
+        }
+    
     def action_confirm(self):
         self.state = 'confirm'
 
